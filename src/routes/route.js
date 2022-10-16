@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();///test-you
 //importing a custom module
 const xyz = require('../logger')
+const wel = require('../logger1/logger.js')
+const help = require ('../util/helper')
+const format = require ('../validator/formatter')
+const lodash = require('../lodash/lodash')
 //importing external package
 const underscore = require('underscore')
 
@@ -10,7 +14,13 @@ router.get('/test-me', function (req, res) {
     console.log("Calling my function ",xyz.myFunction())
     console.log("The value of the constant is ",xyz.myUrl)
     //Trying to use an external package called underscore
-    let myArray = ['Akash', 'Pritesh', 'Sabiha']
+    //calling function
+    wel.welcome();
+    help.getBatchInfo();
+    format.format();
+    lodash.lodash();
+
+    let myArray = ['Vinay', 'Pritesh', 'Sabiha']
     let result = underscore.first(myArray)
     console.log("The result of underscores examples api is : ", result)
     

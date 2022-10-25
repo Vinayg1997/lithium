@@ -5,7 +5,7 @@ const userSchema = new mongoose.Schema( {
     lastName: String,
     mobile: {
         type: String,
-        unique: true,
+        unique: false,
         required: true
     },
     emailId: String,
@@ -21,10 +21,22 @@ const userSchema = new mongoose.Schema( {
     //     siblingName: String
     // },
     // cars: [ String  ]
-}, { timestamps: true });
 
+},
+
+
+{ timestamps: true });
+
+ 
+// const bookSchema = new mongoos.Schema({
+//     bookName : String, 
+//     authorName : String,
+//     category : String,
+//     year : Number
+
+// })
 module.exports = mongoose.model('User', userSchema) //users
-
+// module.exports = mongoose.model('User', bookSchema)
 
 
 // String, Number

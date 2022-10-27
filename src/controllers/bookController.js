@@ -1,11 +1,68 @@
 const { count } = require("console")
 const BookModel= require("../models/bookModel")
+const authorModel = require("../models/bookAuthor")
+const bookAuthor = require("../models/bookAuthor")
+//Author schema
+const createAuthor= async function (req, res) {
+    let data= req.body
 
+    let savedData= await authorModel.create(data)
+    res.send({msg: savedData})
+}
+
+//bookschema
 const createBook= async function (req, res) {
     let data= req.body
 
     let savedData= await BookModel.create(data)
     res.send({msg: savedData})
+}
+const filterbydata = async function(req,res){
+    let singleauthor = await bookAuthor.findOne({author_Name:"Chetan Bhagat"})
+    let equal_id = singleauthor.author_id
+    let allbooks = await BookModel.find({author_id:equal_id})
+
+    res.send({data:allbooks})
+
+}
+
+const UpdateBooks = async function(req ,res){
+    let updateBooks = await BookModel.findOneAndUpdate(
+        { name : "Two states"},
+        {$set :{price :500}},
+        {new :true}
+    )
+
+    let authorName = await bookAuthor.findOne(
+        {author_id:updateBooks.author_id})
+
+    res.send(({data:updateBooks.price , result :authorName.author_name}))
+}
+const findbyprice = async function(req,res){
+    const findData = await BookModel.find(
+        {price : {$gte :50 ,
+                    $lte :100}}).select({author_id:1 , author_name:1})
+       const authorIdlist = findData.map(book => book.author_id)  
+       
+       const authorList= await authorModel.find({author_id:{$in : authorIdlist}})
+
+       findData.forEach(book=>{
+        const author = authorList.find(author => book.author_id===author.author_id)
+       })
+
+            
+    
+    // let Array = []
+
+    // for(let j = 0 ; j<finddata.length ; j++){
+    //     let id = finddata[j].author_id
+    //     let authorName = await bookAuthor.findOne({author_id:id})
+    //                             .select({author_Name : 1 ,author_id :1 , _id :0})
+
+    //     Array.push(authorName)
+    // }
+    res.send({data : Array})
+
 }
 
 const getBooksData= async function (req, res) {
@@ -57,3 +114,9 @@ module.exports.createBook= createBook
 module.exports.getBooksData= getBooksData
 module.exports.updateBooks= updateBooks
 module.exports.deleteBooks= deleteBooks
+
+//create author export
+module.exports.createAuthor=createAuthor
+module.exports.filterbydata=filterbydata
+module.exports.UpdateBooks=UpdateBooks
+module.exports.findbyprice=findbyprice

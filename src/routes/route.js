@@ -17,10 +17,20 @@ router.post("/createBook", BookController.createBook  )
 router.get("/getBooksData", BookController.getBooksData)
 
 router.post("/updateBooks", BookController.updateBooks)
+
 router.post("/deleteBooks", BookController.deleteBooks)
+//author export
+router.post("/createAuthor",BookController.createAuthor)
+
+router.get("/filterbydata", BookController.filterbydata)
+
+router.get("/UpdateBooks",BookController.UpdateBooks)
+
+router.get("/findbyprice",BookController.findbyprice)
 
 //MOMENT JS
 const moment = require('moment');
+const bookAuthor = require('../models/bookAuthor');
 router.get("/dateManipulations", function (req, res) {
     
     // const today = moment();

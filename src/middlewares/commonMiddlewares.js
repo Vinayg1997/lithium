@@ -40,9 +40,16 @@ const myOtherMiddleware = function(req, res, next){
     next()
 }
 
+const mid5 = function(req,res,next){
+let isFreeAppUser = req.headers.isFreeAppUser
+if(isFreeAppuser){
+    return res.send("the request is missing mendatory header")
+}
+}
 module.exports.mid1= mid1
 module.exports.mid2= mid2
 module.exports.mid3= mid3
 module.exports.mid4= mid4
+module.exports.mid5= mid5
 module.exports.myMiddleware = myMiddleware
 module.exports.myOtherMiddleware = myOtherMiddleware

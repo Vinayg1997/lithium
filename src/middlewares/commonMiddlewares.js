@@ -40,9 +40,26 @@ const myOtherMiddleware = function(req, res, next){
     next()
 }
 
+const myOrderMiddleware = function(req, res, next){
+    let isFreeAppUser = req.headers["isfreeappuser"]
+    if(!isFreeAppUser){
+        return res.send("Please Provides Header")
+    }
+    else{
+        if(req.headers["isfreeappuser"]=="true"){
+            req.body.isFreeAppUser = true
+        }
+        else if(req.headers["isfreeappuser"]=="false" ){
+            req.body.isFreeAppUser = false
+        }
+        next()
+    }
+    
+}
 module.exports.mid1= mid1
 module.exports.mid2= mid2
 module.exports.mid3= mid3
 module.exports.mid4= mid4
 module.exports.myMiddleware = myMiddleware
 module.exports.myOtherMiddleware = myOtherMiddleware
+module.exports.myOrderMiddleware = myOrderMiddleware
